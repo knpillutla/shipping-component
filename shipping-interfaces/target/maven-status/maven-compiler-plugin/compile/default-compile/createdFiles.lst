@@ -1,0 +1,12 @@
+com\example\shipping\dto\events\BaseEvent.class
+com\example\shipping\dto\requests\ShipCreationRequestDTO.class
+com\example\shipping\dto\events\ShipCreationFailedEvent.class
+com\example\shipping\dto\events\ShipUpdateFailedEvent.class
+com\example\shipping\dto\requests\ShipUpdateRequestDTO.class
+com\example\shipping\dto\events\ShipCreatedEvent.class
+com\example\shipping\dto\responses\ShipLineDTO.class
+com\example\shipping\dto\requests\ShipLineStatusUpdateRequestDTO.class
+com\example\shipping\dto\events\ExceptionEvent.class
+com\example\shipping\dto\BaseDTO.class
+com\example\shipping\dto\requests\ShipLineCreationRequestDTO.class
+com\example\shipping\dto\responses\ShipDTO.class
