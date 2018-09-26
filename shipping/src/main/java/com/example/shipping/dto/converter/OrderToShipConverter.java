@@ -1,13 +1,18 @@
 package com.example.shipping.dto.converter;
 
-import com.example.order.dto.events.OrderCreatedEvent;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.order.dto.events.OrderPlannedEvent;
 import com.example.order.dto.responses.OrderDTO;
+import com.example.order.dto.responses.OrderLineDTO;
 import com.example.shipping.dto.requests.ShipCreationRequestDTO;
+import com.example.shipping.dto.requests.ShipLineCreationRequestDTO;
 
 public class OrderToShipConverter {
 
-	public static ShipCreationRequestDTO getShipCreationRequestDTO(OrderCreatedEvent orderCreatedEvent) {
-		OrderDTO orderDTO = orderCreatedEvent.getOrderDTO();
+	public static ShipCreationRequestDTO getShipCreationRequestDTO(OrderPlannedEvent orderPlannedEvent) {
+		OrderDTO orderDTO = orderPlannedEvent.getOrderDTO();
 		ShipCreationRequestDTO shipCreationRequestDTO = new ShipCreationRequestDTO();
 		shipCreationRequestDTO.setFirstName(orderDTO.getDelFirstName());
 		shipCreationRequestDTO.setLastName(orderDTO.getDelLastName());
@@ -29,7 +34,15 @@ public class OrderToShipConverter {
 		shipCreationRequestDTO.setExpectedDeliveryDttm(orderDTO.getExpectedDeliveryDttm());
 		shipCreationRequestDTO.setShipByDttm(orderDTO.getShipByDttm());
 		shipCreationRequestDTO.setDeliveryType(orderDTO.getDeliveryType());
-		
+		List<ShipLineCreationRequestDTO> shipLines = new ArrayList();
+		for (OrderLineDTO orderLineDTO : orderDTO.getOrderLines()) {
+			ShipLineCreationRequestDTO lineReq = new ShipLineCreationRequestDTO(orderLineDTO.getOrderLineNbr(),
+					orderLineDTO.getItemBrcd(), orderLineDTO.getOrderQty(), 0.0, 0.0, 0.0, 0.0, 0.0,
+					"OrderPlannedEvent", "CreateShip", orderLineDTO.getRefField1(), orderLineDTO.getRefField2(),
+					orderLineDTO.getUpdatedDttm(), orderLineDTO.getUpdatedBy());
+			shipLines.add(lineReq);
+		}
+		shipCreationRequestDTO.setShipLines(shipLines);
 		return shipCreationRequestDTO;
 	}
 

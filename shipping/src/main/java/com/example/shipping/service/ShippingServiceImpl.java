@@ -1,5 +1,6 @@
 package com.example.shipping.service;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +80,7 @@ public class ShippingServiceImpl implements ShippingService {
 		try {
 			Ship ship = shipDTOConverter.getShipEntity(shipCreationRequestDTO);
 			ship.setStatCode(ShipStatus.CREATED.getStatCode());
+			Date createdDttm = new java.util.Date();
 			Ship savedShipObj = shipDAO.save(ship);
 			shipResponseDTO = shipDTOConverter.getShipDTO(savedShipObj);
 			eventPublisher.publish(new ShipCreatedEvent(shipResponseDTO));

@@ -1,6 +1,7 @@
 package com.example.shipping.dto.converter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -81,11 +82,16 @@ public class ShipDTOConverter {
 		shipEntity.setExpectedDeliveryDttm(shipCreationRequestDTO.getExpectedDeliveryDttm());
 		shipEntity.setShipByDttm(shipCreationRequestDTO.getShipByDttm());
 		shipEntity.setDeliveryType(shipCreationRequestDTO.getDeliveryType());
+		Date createdDttm = new java.util.Date();
+		shipEntity.setCreatedDttm(createdDttm);
+		shipEntity.setUpdatedDttm(createdDttm);
 		List<ShipLine> shipLineList = new ArrayList();
 		for (ShipLineCreationRequestDTO shipLineCreationRequestDTO : shipCreationRequestDTO.getShipLines()) {
 			ShipLine shipLineEntity = getShipLineEntity(shipLineCreationRequestDTO, shipCreationRequestDTO);
 			shipEntity.addShipLine(shipLineEntity);
 			shipLineEntity.setShip(shipEntity);
+			shipLineEntity.setCreatedDttm(createdDttm);
+			shipLineEntity.setUpdatedDttm(createdDttm);
 		}
 		return shipEntity;
 	}
@@ -93,6 +99,14 @@ public class ShipDTOConverter {
 	public ShipLine getShipLineEntity(ShipLineCreationRequestDTO shipLineCreationRequestDTO,
 			ShipCreationRequestDTO shipCreationRequestDTO) {
 		ShipLine shipLine = new ShipLine();
+		shipLine.setItemBrcd(shipLineCreationRequestDTO.getItemBrcd());
+		shipLine.setItemHeight(shipLineCreationRequestDTO.getItemHeight());
+		shipLine.setItemLength(shipLineCreationRequestDTO.getItemLength());
+		shipLine.setItemWidth(shipLineCreationRequestDTO.getItemWidth());
+		shipLine.setItemUnitVol(shipLineCreationRequestDTO.getItemUnitVol());
+		shipLine.setItemUnitWt(shipLineCreationRequestDTO.getItemUnitWt());
+		shipLine.setShipLineNbr(shipLineCreationRequestDTO.getShipLineNbr());
+		shipLine.setQty(shipLineCreationRequestDTO.getQty());
 		return shipLine;
 	}
 
@@ -105,7 +119,6 @@ public class ShipDTOConverter {
 		shipEntity.setRefField1(shipUpdateReqDTO.getRefField1());
 		shipEntity.setRefField2(shipUpdateReqDTO.getRefField2());
 		shipEntity.setSource(shipUpdateReqDTO.getSource());
-		shipEntity.setUpdatedDttm(new java.util.Date());
 		return shipEntity;
 	}
 
