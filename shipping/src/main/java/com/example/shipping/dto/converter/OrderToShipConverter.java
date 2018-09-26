@@ -37,9 +37,10 @@ public class OrderToShipConverter {
 		List<ShipLineCreationRequestDTO> shipLines = new ArrayList();
 		for (OrderLineDTO orderLineDTO : orderDTO.getOrderLines()) {
 			ShipLineCreationRequestDTO lineReq = new ShipLineCreationRequestDTO(orderLineDTO.getOrderLineNbr(),
-					orderLineDTO.getItemBrcd(), orderLineDTO.getOrderQty(), 0.0, 0.0, 0.0, 0.0, 0.0,
-					"OrderPlannedEvent", "CreateShip", orderLineDTO.getRefField1(), orderLineDTO.getRefField2(),
-					orderLineDTO.getUpdatedDttm(), orderLineDTO.getUpdatedBy());
+					orderLineDTO.getItemBrcd(), orderLineDTO.getOrderQty(), orderLineDTO.getItemWidth(),
+					orderLineDTO.getItemHeight(), orderLineDTO.getItemLength(), orderLineDTO.getItemUnitWt(),
+					orderLineDTO.getItemUnitVol(), "OrderPlannedEvent", "CreateShip", orderLineDTO.getRefField1(),
+					orderLineDTO.getRefField2(), orderLineDTO.getUpdatedDttm(), orderLineDTO.getUpdatedBy());
 			shipLines.add(lineReq);
 		}
 		shipCreationRequestDTO.setShipLines(shipLines);
