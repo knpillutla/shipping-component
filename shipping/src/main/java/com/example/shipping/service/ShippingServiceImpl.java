@@ -78,7 +78,11 @@ public class ShippingServiceImpl implements ShippingService {
 	@Override
 	public ShipDTO createShipForWarehouse(ShipCreationRequestDTO shipCreationRequestDTO) throws Exception {
 		ShipDTO shipDTO = this.createShip(shipCreationRequestDTO);
-		return shipDTO;
+		// for the time being, both creation and routing are done at the same time until functionality is added.
+		ShipUpdateRequestDTO shipUpdateRequestDTO = new ShipUpdateRequestDTO();
+		shipUpdateRequestDTO.setId(shipDTO.getId());
+		ShipDTO updatedShipDTO = this.updateShip(shipUpdateRequestDTO);
+		return updatedShipDTO;
 	}
 
 	@Override
