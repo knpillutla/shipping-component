@@ -24,6 +24,7 @@ public class ShipCreationRequestDTO extends BaseDTO{
 	String division;
 	String busUnit;
 	String batchNbr;
+	Long orderId;
 	String orderNbr;
 	Date orderDttm;
 	Date shipByDttm;

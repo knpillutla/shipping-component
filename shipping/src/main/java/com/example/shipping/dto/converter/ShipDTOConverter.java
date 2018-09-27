@@ -24,6 +24,7 @@ public class ShipDTOConverter {
 			shipLineDTOList.add(shipLineDTO);
 		}
 		ShipDTO shipDTO = new ShipDTO();
+		shipDTO.setId(shipEntity.getId());
 		shipDTO.setBusName(shipEntity.getBusName());
 		shipDTO.setLocnNbr(shipEntity.getLocnNbr());
 		shipDTO.setCompany(shipEntity.getCompany());
@@ -39,6 +40,7 @@ public class ShipDTOConverter {
 		shipDTO.setShipCarrierService(shipEntity.getShipCarrierService());
 		shipDTO.setShipCost(shipEntity.getShipCost());
 		shipDTO.setTrackingNbr(shipEntity.getTrackingNbr());
+		shipDTO.setOrderId(shipEntity.getOrderId());
 		return shipDTO;
 	}
 
@@ -82,6 +84,7 @@ public class ShipDTOConverter {
 		shipEntity.setExpectedDeliveryDttm(shipCreationRequestDTO.getExpectedDeliveryDttm());
 		shipEntity.setShipByDttm(shipCreationRequestDTO.getShipByDttm());
 		shipEntity.setDeliveryType(shipCreationRequestDTO.getDeliveryType());
+		shipEntity.setOrderId(shipCreationRequestDTO.getOrderId());
 		Date createdDttm = new java.util.Date();
 		shipEntity.setCreatedDttm(createdDttm);
 		shipEntity.setUpdatedDttm(createdDttm);

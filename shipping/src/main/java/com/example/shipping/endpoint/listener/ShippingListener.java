@@ -5,6 +5,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 
 import com.example.order.dto.events.OrderPlannedEvent;
+import com.example.order.dto.events.SmallStoreOrderPlannedEvent;
 import com.example.shipping.dto.converter.OrderToShipConverter;
 import com.example.shipping.service.ShippingService;
 import com.example.shipping.streams.ShippingStreams;
@@ -23,7 +24,7 @@ public class ShippingListener {
 		log.info("Received OrderPlannedEvent Msg: {}" + ": at :" + new java.util.Date(), orderPlannedEvent);
 		long startTime = System.currentTimeMillis();
 		try {
-			shippingService.createShip(OrderToShipConverter.getShipCreationRequestDTO(orderPlannedEvent));
+			shippingService.createShipForWarehouse(OrderToShipConverter.getShipCreationRequestDTO(orderPlannedEvent));
 			long endTime = System.currentTimeMillis();
 			log.info("Completed OrderPlannedEvent for : " + orderPlannedEvent + ": at :" + new java.util.Date()
 					+ " : total time:" + (endTime - startTime) / 1000.00 + " secs");
@@ -34,4 +35,23 @@ public class ShippingListener {
 					+ new java.util.Date() + " : total time:" + (endTime - startTime) / 1000.00 + " secs", e);
 		}
 	}
+
+	@StreamListener(target=ShippingStreams.ORDERS_OUTPUT, condition = "headers['eventName']=='SmallStoreOrderPlannedEvent'")
+	public void handleSmallStoreOrderPlannedEvent(SmallStoreOrderPlannedEvent smallStoreOrderPlannedEvent) { // OrderCreationRequestDTO
+																					// orderCreationRequestDTO) {
+		log.info("Received SmallStoreOrderPlannedEvent Msg: {}" + ": at :" + new java.util.Date(), smallStoreOrderPlannedEvent);
+		long startTime = System.currentTimeMillis();
+		try {
+			shippingService.createShipForSmallStore(OrderToShipConverter.getShipCreationRequestDTO(smallStoreOrderPlannedEvent));
+			long endTime = System.currentTimeMillis();
+			log.info("Completed SmallStoreOrderPlannedEvent for : " + smallStoreOrderPlannedEvent + ": at :" + new java.util.Date()
+					+ " : total time:" + (endTime - startTime) / 1000.00 + " secs");
+		} catch (Exception e) {
+			e.printStackTrace();
+			long endTime = System.currentTimeMillis();
+			log.error("Error Completing SmallStoreOrderPlannedEvent for : " + smallStoreOrderPlannedEvent + ": at :"
+					+ new java.util.Date() + " : total time:" + (endTime - startTime) / 1000.00 + " secs", e);
+		}
+	}
+
 }

@@ -58,6 +58,9 @@ public class Ship  implements Serializable{
 	@Column(name="ORDER_NBR")
 	String orderNbr;
 
+	@Column(name="ORDER_ID")
+	Long orderId;
+
 	@Column(name="STAT_CODE")
 	Integer statCode;
 
@@ -107,7 +110,11 @@ public class Ship  implements Serializable{
     String zipcode;
     @Column(name="DEL_PHONE_NBR")
     String phoneNbr;
-
+    @Column(name="INVOICE_ZPL")
+    String invoiceZPL;
+    @Column(name="LABEL_ZPL")
+    String labelZPL;
+    
     @Column(name="SOURCE")
 	String source;
 

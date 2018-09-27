@@ -27,6 +27,7 @@ public class ShipDTO  extends BaseDTO implements Serializable{
 	String division;
 	String busUnit;
 	String batchNbr;
+	Long orderId;
 	String orderNbr;
 	Integer statCode;
 	Date orderDttm;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.order.dto.events.OrderPlannedEvent;
+import com.example.order.dto.events.SmallStoreOrderPlannedEvent;
 import com.example.order.dto.responses.OrderDTO;
 import com.example.order.dto.responses.OrderLineDTO;
 import com.example.shipping.dto.requests.ShipCreationRequestDTO;
@@ -11,8 +12,16 @@ import com.example.shipping.dto.requests.ShipLineCreationRequestDTO;
 
 public class OrderToShipConverter {
 
+	public static ShipCreationRequestDTO getShipCreationRequestDTO(SmallStoreOrderPlannedEvent smallOrderPlannedEvent) {
+		ShipCreationRequestDTO shipCreationRequestDTO = getShipCreationRequestDTO(smallOrderPlannedEvent.getOrderDTO());
+		return shipCreationRequestDTO;
+	}
 	public static ShipCreationRequestDTO getShipCreationRequestDTO(OrderPlannedEvent orderPlannedEvent) {
-		OrderDTO orderDTO = orderPlannedEvent.getOrderDTO();
+		ShipCreationRequestDTO shipCreationRequestDTO = getShipCreationRequestDTO(orderPlannedEvent.getOrderDTO());
+		return shipCreationRequestDTO;
+	}
+	
+	public static ShipCreationRequestDTO getShipCreationRequestDTO(OrderDTO orderDTO) {
 		ShipCreationRequestDTO shipCreationRequestDTO = new ShipCreationRequestDTO();
 		shipCreationRequestDTO.setFirstName(orderDTO.getDelFirstName());
 		shipCreationRequestDTO.setLastName(orderDTO.getDelLastName());
@@ -34,6 +43,7 @@ public class OrderToShipConverter {
 		shipCreationRequestDTO.setExpectedDeliveryDttm(orderDTO.getExpectedDeliveryDttm());
 		shipCreationRequestDTO.setShipByDttm(orderDTO.getShipByDttm());
 		shipCreationRequestDTO.setDeliveryType(orderDTO.getDeliveryType());
+		shipCreationRequestDTO.setOrderId(orderDTO.getId());
 		List<ShipLineCreationRequestDTO> shipLines = new ArrayList();
 		for (OrderLineDTO orderLineDTO : orderDTO.getOrderLines()) {
 			ShipLineCreationRequestDTO lineReq = new ShipLineCreationRequestDTO(orderLineDTO.getOrderLineNbr(),
